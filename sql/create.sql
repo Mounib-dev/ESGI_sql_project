@@ -15,7 +15,7 @@ CREATE TABLE artiste (
     id INT NOT NULL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     date_de_naissance DATE,
-    nationalite VARCHAR(100)
+    nationalite VARCHAR(10)
 );
 
 CREATE TABLE categorie (
