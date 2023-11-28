@@ -1,39 +1,29 @@
 const http = require('node:http');
+const express = require('express');
+const fs = require('fs');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World\n');
-});
-
+const app = express();
 require('dotenv').config();
-
-// Create mysql connection
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
+const dbConfig = {
     host: 'localhost',
     user: 'root',
     database: process.env.MYSQL_DATABASE,
     password: process.env.MYSQL_PASSWORD || null
-});
+}
 
-connection.connect((error) => {
-    if(error) {
-        console.error(error);
-        return
-    }
+// Create mysql connection
+const mysql = require('mysql2');
+const connection = mysql.createConnection(dbConfig);
 
-    console.log('Connected to the MySQL server.');
-
-    connection.query('select * from test', (error, results) => {
-        console.log(results);
-
-        connection.end();
-    });
+app.get('/initdb', async(req, res) => {
+    //! Not working for the moment;
+    // const createSQL = fs.readFileSync('./sql/create.sql', 'utf8');
+    // connection.query(createSQL);
+    connection.query('CALL create_db()')
 })
 
-server.listen(port, hostname, () => {
+app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });

@@ -1,34 +1,46 @@
--- morceau, album, artiste et catégorie
+DELIMITER //
 
-CREATE TABLE morceau (
-    id INT NOT NULL PRIMARY KEY,
-    titre VARCHAR(255) NOT NULL,
-    duree INT NOT NULL,
-    date_sortie DATE NOT NULL,
-    id_artiste INT NOT NULL,
-    id_categorie INT,
-    FOREIGN KEY (id_artiste) REFERENCES artiste(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_categorie) REFERENCES categorie(id)
-);
+-- Delete the "CreateMusicDatabase" procedure if it exists
+DROP PROCEDURE IF EXISTS CreateMusicDatabase;
 
-CREATE TABLE artiste (
-    id INT NOT NULL PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL,
-    date_de_naissance DATE,
-    nationalite VARCHAR(10)
-);
+-- Create the "music" database
+CREATE PROCEDURE CreateMusicDatabase()
+BEGIN
+    -- Create the "artiste" table
+    CREATE TABLE IF NOT EXISTS artiste (
+        id INT NOT NULL PRIMARY KEY,
+        nom VARCHAR(255) NOT NULL,
+        date_de_naissance DATE,
+        nationalite VARCHAR(10)
+    );
 
-CREATE TABLE categorie (
-    id INT NOT NULL PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL
-);
+    -- Create the "categorie" table
+    CREATE TABLE IF NOT EXISTS categorie (
+        id INT NOT NULL PRIMARY KEY,
+        nom VARCHAR(100) NOT NULL
+    );
 
-CREATE TABLE album (
-    id INT NOT NULL PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL,
-    ids_morceau INT ARRAY NOT NULL,
-    id_artiste INT NOT NULL,
-    FOREIGN KEY (ids_morceau) REFERENCES morceau(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_artiste) RERERENCES artiste(id)
-);
+    -- Create the "album" table
+    CREATE TABLE IF NOT EXISTS album (
+        id INT NOT NULL PRIMARY KEY,
+        nom VARCHAR(255) NOT NULL,
+        id_artiste INT NOT NULL,
+        FOREIGN KEY (id_artiste) REFERENCES artiste(id) ON DELETE CASCADE
+    );
 
+    -- Create the "morceau" table
+    CREATE TABLE IF NOT EXISTS morceau (
+        id INT NOT NULL PRIMARY KEY,
+        titre VARCHAR(255) NOT NULL,
+        duree INT NOT NULL,
+        date_sortie DATE NOT NULL,
+        id_artiste INT NOT NULL,
+        id_categorie INT,
+        id_album INT,
+        FOREIGN KEY (id_artiste) REFERENCES artiste(id) ON DELETE CASCADE,
+        FOREIGN KEY (id_categorie) REFERENCES categorie(id),
+        FOREIGN KEY (id_album) REFERENCES album(id)
+    );
+END //
+
+DELIMITER ;
