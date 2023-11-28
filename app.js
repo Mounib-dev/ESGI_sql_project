@@ -21,7 +21,7 @@ app.get('/initdb', async(req, res) => {
     //! Not working for the moment;
     // const createSQL = fs.readFileSync('./sql/create.sql', 'utf8');
     // connection.query(createSQL);
-    connection.query('CALL create_db()')
+    connection.query('CALL CreateMusicDatabase()')
 })
 
 app.listen(port, hostname, () => {
