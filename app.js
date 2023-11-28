@@ -15,7 +15,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    database: 'music_db',
+    database: process.env.MYSQL_DATABASE,
     password: process.env.MYSQL_PASSWORD || null
 });
 
