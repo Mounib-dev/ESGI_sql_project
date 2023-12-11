@@ -32,7 +32,37 @@ const executeQueryFromFile = async (filepath) => {
     });
 }
 
+const addProcedures = async () => {
+    await executeQueryFromFile('procedures/cleanDB.sql');
+    await executeQueryFromFile('procedures/createDB.sql');
+    await executeQueryFromFile('procedures/insertData.sql');
+}
+
+const executeProcedure = async (procedureName) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`CALL ${procedureName}`, (error, result) => {
+            if(error) {
+                console.error('Error executing procedure:', error);
+                reject(error);
+            } else {
+                console.log('Result:', result);
+                resolve(result);
+            }
+        });
+    })
+}
+
+const deleteAllProcedures = async () => {
+    await executeQuery('DROP PROCEDURE IF EXISTS CleanDB;');
+    await executeQuery('DROP PROCEDURE IF EXISTS CreateDB;');
+    await executeQuery('DROP PROCEDURE IF EXISTS InsertData;');
+    await executeQuery('DROP PROCEDURE IF EXISTS DeleteCategory;');
+}
+
 module.exports = {
     executeQuery,
-    executeQueryFromFile
+    executeQueryFromFile,
+    addProcedures,
+    executeProcedure,
+    deleteAllProcedures
 }
