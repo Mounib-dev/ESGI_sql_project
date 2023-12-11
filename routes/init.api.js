@@ -7,7 +7,10 @@ const connection = getConnection();
 router.get('/initdb', async(req, res) => {
     await deleteAllProcedures();
     await addProcedures();
-    
+
+    await deleteTriggers();
+    await addTriggers();
+
     res.redirect('./call');
 })
 
@@ -18,6 +21,9 @@ router.get('/call', async(req, res) => {
 })
 
 
+// router.get('/delete-categorie', async (req, res) => {
+    
+// })
 
 
 module.exports = router;
