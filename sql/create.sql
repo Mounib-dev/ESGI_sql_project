@@ -1,5 +1,4 @@
 DELIMITER //
-
 -- Delete the "CreateMusicDatabase" procedure if it exists
 DROP PROCEDURE IF EXISTS CreateMusicDatabase;
 
@@ -11,7 +10,7 @@ BEGIN
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nom VARCHAR(255) NOT NULL,
         date_de_naissance DATE,
-        nationalite VARCHAR(100)
+        nationalite VARCHAR(10)
     );
 
     -- Create the "categorie" table
@@ -25,7 +24,7 @@ BEGIN
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         nom VARCHAR(255) NOT NULL,
         id_artiste INT NOT NULL,
-        FOREIGN KEY (id_artiste) REFERENCES artiste(id)
+        FOREIGN KEY (id_artiste) REFERENCES artiste(id) ON DELETE CASCADE
     );
 
     -- Create the "morceau" table
@@ -42,5 +41,4 @@ BEGIN
         FOREIGN KEY (id_album) REFERENCES album(id)
     );
 END //
-
 DELIMITER ;
