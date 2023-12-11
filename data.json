@@ -1,0 +1,22 @@
+{
+    "artiste": [
+        {
+            "nom": "Damso",
+            "date_de_naissance": "10-02-1997",
+            "nationalite": "Française"
+        },
+        {
+            "nom": "Booba",
+            "date_de_naissance": "10-02-1984",
+            "nationalite": "Sénégalaise"
+        }
+    ],
+    "morceau": [
+        {
+            "nom": "Test"
+        },
+        {
+            "nom": "Test2"
+        }
+    ]
+}
