@@ -74,6 +74,7 @@ const deleteAllProcedures = async () => {
 const addTriggers = async () => {
     try {
         await executeQueryFromFile('triggers/deleteCategory.sql');
+        await executeQueryFromFile('triggers/artisteDefaultValueIfBlank.sql')
         console.log('Triggers correctly add');
     } catch (error) {
         console.error('Error adding triggers:', error);
