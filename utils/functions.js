@@ -71,5 +71,7 @@ module.exports = {
     executeQueryFromFile,
     addProcedures,
     executeProcedure,
-    deleteAllProcedures
+    deleteAllProcedures,
+    addTriggers,
+    deleteAllTriggers
 }
