@@ -11,7 +11,6 @@ const executeQuery = (query) => {
                 console.error('Error executing query:', error);
                 reject(error);
             } else {
-                console.log('Result:', result);
                 resolve(result);
             }
         });
@@ -28,7 +27,6 @@ const executeQueryFromFile = async (filepath) => {
                 console.error('Error reading file:', err);
                 throw err;
             }
-            console.log('Data:', data);
             return await executeQuery(data);
         });
         return result;
@@ -76,6 +74,7 @@ const deleteAllProcedures = async () => {
 const addTriggers = async () => {
     try {
         await executeQueryFromFile('triggers/deleteCategory.sql');
+        console.log('Triggers correctly add');
     } catch (error) {
         console.error('Error adding triggers:', error);
         throw error;
