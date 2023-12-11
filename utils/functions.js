@@ -56,7 +56,14 @@ const deleteAllProcedures = async () => {
     await executeQuery('DROP PROCEDURE IF EXISTS CleanDB;');
     await executeQuery('DROP PROCEDURE IF EXISTS CreateDB;');
     await executeQuery('DROP PROCEDURE IF EXISTS InsertData;');
-    await executeQuery('DROP PROCEDURE IF EXISTS DeleteCategory;');
+}
+
+const addTriggers = async () => {
+    await executeQueryFromFile('triggers/deleteCategory.sql');
+}
+
+const deleteAllTriggers = async () => {
+    await executeQuery('DROP TRIGGER IF EXISTS before_delete_trigger;');
 }
 
 module.exports = {
