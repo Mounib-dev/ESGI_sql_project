@@ -53,14 +53,21 @@ const executeProcedure = (procedureName) => {
 }
 
 const deleteAllProcedures = () => {
-    executeQuery('DROP PROCEDURE IF EXISTS CleanDB;')
-    .then(() => executeQuery('DROP PROCEDURE IF EXISTS CreateDB;'))
-    .then(() => executeQuery('DROP PROCEDURE IF EXISTS InsertData;'))
+    return new Promise((resolve, reject) => { 
+        
+        executeQuery('DROP PROCEDURE IF EXISTS CleanDB;')
+        .then(() => executeQuery('DROP PROCEDURE IF EXISTS CreateDB;'))
+        .then(() => executeQuery('DROP PROCEDURE IF EXISTS InsertData;'))
+        .then((error) => {
+            if(error) reject(error);
+            else resolve();
+        });
+    });
 }
 
 const addTriggers = () => {
     return new Promise((resolve, reject) => {
-        executeQueryFromFile('triggers/deleteCategory.sql').then(() => {
+        executeQueryFromFile('triggers/deleteCategory.sql').then((error) => {
             if(error) reject(error);
             else resolve();
         })
@@ -68,7 +75,14 @@ const addTriggers = () => {
 }
 
 const deleteAllTriggers = () => {
-    executeQuery('DROP TRIGGER IF EXISTS before_delete_trigger;').wait();
+    return new Promise((resolve) => {
+        executeQuery('DROP TRIGGER IF EXISTS before_delete_trigger;')
+        .then((error) => {
+            if(error) reject(error);
+            else resolve();
+        });
+    
+    })
 }
 
 module.exports = {
