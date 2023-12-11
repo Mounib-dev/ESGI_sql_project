@@ -34,6 +34,6 @@ BEGIN
         id_album INT,
         FOREIGN KEY (id_artiste) REFERENCES artiste(id) ON DELETE CASCADE,
         FOREIGN KEY (id_categorie) REFERENCES categorie(id),
-        FOREIGN KEY (id_album) REFERENCES album(id)
+        FOREIGN KEY (id_album) REFERENCES album(id) ON DELETE CASCADE
     );
 END;
