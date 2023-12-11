@@ -7,7 +7,8 @@ const connection = getConnection();
 router.get('/initdb', async(req, res) => {
     await deleteAllProcedures();
     await addProcedures();
-
+    
+    res.redirect('./call');
 })
 
 router.get('/call', async(req, res) => {
@@ -15,6 +16,8 @@ router.get('/call', async(req, res) => {
     .then(() => executeProcedure('CreateDB'))
     .then(() => executeProcedure('InsertData'))
 })
+
+
 
 
 module.exports = router;
