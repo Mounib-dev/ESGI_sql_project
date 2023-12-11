@@ -6,13 +6,13 @@ const connection = getConnection();
 
 router.get('/initdb', async (req, res) => {
     try {
+        await executeProcedure('CleanDB');
+        await executeProcedure('CreateDB');
+        await executeProcedure('InsertData');
         await deleteAllProcedures();
         await addProcedures();
         await deleteAllTriggers();
         await addTriggers();
-        await executeProcedure('CleanDB');
-        await executeProcedure('CreateDB');
-        await executeProcedure('InsertData');
 
         res.status(200).send("<h1>Success</h1>");
     } catch (error) {
