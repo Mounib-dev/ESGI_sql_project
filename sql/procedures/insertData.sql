@@ -1,4 +1,4 @@
-CREATE PROCEDURE InsertData()
+CREATE PROCEDURE IF NOT EXISTS InsertData()
 BEGIN
     -- insert artistes
     INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('Mozart', '1756-01-27', 'Autrichien');

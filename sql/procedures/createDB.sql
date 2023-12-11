@@ -1,9 +1,5 @@
-DELIMITER //
--- Delete the "CreateMusicDatabase" procedure if it exists
-DROP PROCEDURE IF EXISTS CreateMusicDatabase;
-
 -- Create the "music" database
-CREATE PROCEDURE CreateMusicDatabase()
+CREATE PROCEDURE IF NOT EXISTS CreateDB()
 BEGIN
     -- Create the "artiste" table
     CREATE TABLE IF NOT EXISTS artiste (
@@ -40,5 +36,4 @@ BEGIN
         FOREIGN KEY (id_categorie) REFERENCES categorie(id),
         FOREIGN KEY (id_album) REFERENCES album(id)
     );
-END //
-DELIMITER ;
+END;
