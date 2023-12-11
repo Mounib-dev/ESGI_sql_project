@@ -20,69 +20,69 @@ const executeQuery = (query) => {
 
 // Read a sql file and execute the query
 //! No multiple queries in a file
-const executeQueryFromFile = (filepath) => {
-    return new Promise((resolve, reject) => {
+const executeQueryFromFile = async (filepath) => {
+    try {
         const relativePath = `./sql/${filepath}`;
-        fs.readFile(relativePath, 'utf-8', async (error, data) => {
-            if(error) {
-                reject(error)
-            }
-            
-            resolve(executeQuery(data));
-        });
-    })
+        const data = await fs.readFile(relativePath, 'utf-8');
+        const result = await executeQuery(data);
+        return result;
+    } catch (error) {
+        console.error('Error reading or executing query from file:', error);
+        throw error;
+    }
 }
 
-const addProcedures = () => {
-    executeQueryFromFile('procedures/cleanDB.sql')
-    .then(() => executeQueryFromFile('procedures/createDB.sql'))
-    .then(() => executeQueryFromFile('procedures/insertData.sql'))
+const addProcedures = async () => {
+    try {
+        await executeQueryFromFile('procedures/cleanDB.sql');
+        await executeQueryFromFile('procedures/createDB.sql');
+        await executeQueryFromFile('procedures/insertData.sql');
+    } catch (error) {
+        console.error('Error adding procedures:', error);
+        throw error;
+    }
 }
 
 const executeProcedure = (procedureName) => {
     return new Promise((resolve, reject) => {
         connection.query(`CALL ${procedureName}`, (error, result) => {
-            if(error) {
+            if (error) {
                 console.error('Error executing procedure:', error);
                 reject(error);
             } else {
                 resolve(result);
             }
         });
-    })
-}
-
-const deleteAllProcedures = () => {
-    return new Promise((resolve, reject) => { 
-        
-        executeQuery('DROP PROCEDURE IF EXISTS CleanDB;')
-        .then(() => executeQuery('DROP PROCEDURE IF EXISTS CreateDB;'))
-        .then(() => executeQuery('DROP PROCEDURE IF EXISTS InsertData;'))
-        .then((error) => {
-            if(error) reject(error);
-            else resolve();
-        });
     });
 }
 
-const addTriggers = () => {
-    return new Promise((resolve, reject) => {
-        executeQueryFromFile('triggers/deleteCategory.sql').then((error) => {
-            if(error) reject(error);
-            else resolve();
-        })
-    })
+const deleteAllProcedures = async () => {
+    try {
+        await executeQuery('DROP PROCEDURE IF EXISTS CleanDB;');
+        await executeQuery('DROP PROCEDURE IF EXISTS CreateDB;');
+        await executeQuery('DROP PROCEDURE IF EXISTS InsertData;');
+    } catch (error) {
+        console.error('Error deleting procedures:', error);
+        throw error;
+    }
 }
 
-const deleteAllTriggers = () => {
-    return new Promise((resolve) => {
-        executeQuery('DROP TRIGGER IF EXISTS before_delete_trigger;')
-        .then((error) => {
-            if(error) reject(error);
-            else resolve();
-        });
-    
-    })
+const addTriggers = async () => {
+    try {
+        await executeQueryFromFile('triggers/deleteCategory.sql');
+    } catch (error) {
+        console.error('Error adding triggers:', error);
+        throw error;
+    }
+}
+
+const deleteAllTriggers = async () => {
+    try {
+        await executeQuery('DROP TRIGGER IF EXISTS before_delete_trigger;');
+    } catch (error) {
+        console.error('Error deleting triggers:', error);
+        throw error;
+    }
 }
 
 module.exports = {
@@ -93,4 +93,4 @@ module.exports = {
     deleteAllProcedures,
     addTriggers,
     deleteAllTriggers
-}
+};
