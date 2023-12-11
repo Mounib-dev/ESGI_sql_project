@@ -15,6 +15,8 @@ router.get('/initdb', async(req, res) => {
     });
 
     await executeQueryFromFile('procedures/insertData.sql');
-})
+});
+
+
 
 module.exports = router;
