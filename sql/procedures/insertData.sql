@@ -4,7 +4,6 @@ BEGIN
     INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('Mozart', '1756-01-27', 'Autrichien');
     INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('Beethoven', '1770-12-17', 'Allemand');
     INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('Bach', '1685-03-31', 'Allemand');
-    INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('', '1884-07-23', 'Espagnol');
 
     -- insert albums
     INSERT INTO album (nom, id_artiste) VALUES ('Symphonie n°40', 1);
