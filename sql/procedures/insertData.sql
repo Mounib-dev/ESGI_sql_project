@@ -8,11 +8,6 @@ BEGIN
     -- insert albums
     INSERT INTO album (nom, id_artiste) VALUES ('Symphonie n°40', 1);
 
-    -- insert morceaux
-    INSERT INTO morceau (titre, duree, date_sortie, id_artiste, id_album) VALUES ('Symphonie n°40', 25, '1788-07-25', 1, 1);
-    INSERT INTO morceau (titre, duree, date_sortie, id_artiste) VALUES ('Symphonie n°41', 25, '1788-07-25', 1);
-    INSERT INTO morceau (titre, duree, date_sortie, id_artiste, id_categorie) VALUES ('Symphonie n°39', 25, '1788-07-25', 1, 1);
-
     INSERT INTO categorie (nom) VALUES ('Classique');
     INSERT INTO categorie (nom) VALUES ('Jazz');
     INSERT INTO categorie (nom) VALUES ('Rock');
@@ -20,4 +15,10 @@ BEGIN
     INSERT INTO categorie (nom) VALUES ('Rap');
     INSERT INTO categorie (nom) VALUES ('Metal');
     INSERT INTO categorie (nom) VALUES ('Reggae');
+
+    -- insert morceaux
+    INSERT INTO morceau (titre, duree, date_sortie, id_artiste, id_album) VALUES ('Symphonie n°40', 25, '1788-07-25', 1, 1);
+    INSERT INTO morceau (titre, duree, date_sortie, id_artiste) VALUES ('Symphonie n°41', 25, '1788-07-25', 1);
+    INSERT INTO morceau (titre, duree, date_sortie, id_artiste, id_categorie) VALUES ('Symphonie n°39', 25, '1788-07-25', 1, 1);
+
 END;
