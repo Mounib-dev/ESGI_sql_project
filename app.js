@@ -5,24 +5,21 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 const app = express();
-require('dotenv').config();
-const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    database: process.env.MYSQL_DATABASE,
-    password: process.env.MYSQL_PASSWORD || null
-}
 
 // Create mysql connection
-const mysql = require('mysql2');
-const connection = mysql.createConnection(dbConfig);
+const { getConnection } = require('./utils/config');
 
-app.get('/initdb', async(req, res) => {
-    //! Not working for the moment;
-    // const createSQL = fs.readFileSync('./sql/create.sql', 'utf8');
-    // connection.query(createSQL);
-    connection.query('CALL CreateMusicDatabase()')
+const connection = getConnection();
+
+connection.connect((error) => {
+    if(error) console.log(error);
+    else console.log('Connected to MySQL');
 })
+
+const router = require('./routes');
+
+app.use(router);
+
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
