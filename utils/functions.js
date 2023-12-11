@@ -75,7 +75,7 @@ const addTriggers = async () => {
     try {
         await executeQueryFromFile('triggers/deleteCategory.sql');
         await executeQueryFromFile('triggers/artisteDefaultValueIfBlank.sql')
-        console.log('Triggers correctly add');
+        await executeQueryFromFile('triggers/validBirthDate.sql');
     } catch (error) {
         console.error('Error adding triggers:', error);
         throw error;
@@ -85,6 +85,7 @@ const addTriggers = async () => {
 const deleteAllTriggers = async () => {
     try {
         await executeQuery('DROP TRIGGER IF EXISTS before_delete_trigger;');
+        await executeQuery('DROP TRIGGER IF EXISTS artist_valid_birth_date;');
     } catch (error) {
         console.error('Error deleting triggers:', error);
         throw error;
