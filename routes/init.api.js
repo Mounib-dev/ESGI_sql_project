@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { getConnection } = require('../utils/config');
-const { deleteAllProcedures, addProcedures, executeProcedure } = require('../utils/functions');
+const { deleteAllProcedures, addProcedures, executeProcedure, addTriggers, deleteAllTriggers } = require('../utils/functions');
 
 const connection = getConnection();
 
@@ -8,7 +8,7 @@ router.get('/initdb', async(req, res) => {
     await deleteAllProcedures();
     await addProcedures();
 
-    await deleteTriggers();
+    await deleteAllTriggers();
     await addTriggers();
 
     res.redirect('./call');
@@ -21,9 +21,9 @@ router.get('/call', async(req, res) => {
 })
 
 
-// router.get('/delete-categorie', async (req, res) => {
+router.get('/delete-categorie', async (req, res) => {
     
-// })
+})
 
 
 module.exports = router;
