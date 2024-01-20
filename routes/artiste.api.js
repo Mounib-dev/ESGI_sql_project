@@ -19,7 +19,10 @@ router.post("/create", (req, res) => {
         .send("<h2>Nouveau artiste correctement ajouté</h2>");
     })
     .catch((err) => {
-      return res.status(409).send("<h2>Ajout erronné</h2>");
+      console.log(err);
+      return res
+        .status(409)
+        .send("<h2>Le nom que vous avez entré existe déjà</h2>");
     });
 });
 
@@ -47,7 +50,7 @@ router.post("/update", (req, res) => {
     .catch((err) => {
       console.log(err.message);
       return res
-        .status(409)
+        .status(400)
         .send(
           "<h2>Une erreur est survenue, vous ne pouvez pas modifier la nationalité d'un artiste</h2>"
         );
