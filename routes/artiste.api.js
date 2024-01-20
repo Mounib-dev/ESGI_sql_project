@@ -32,7 +32,9 @@ router.get("/read", (req, res) => {
       return res.status(200).send("<h2>Lecture réussie</h2>");
     })
     .catch((err) => {
-      return res.status(404).send("<h2>Ajout erronné</h2>");
+      return res
+        .status(500)
+        .send("<h2>Un problème est survenu, veuillez réessayer.</h2>");
     });
 });
 
