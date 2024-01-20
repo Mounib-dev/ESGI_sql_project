@@ -7,8 +7,6 @@ router.use("/init", initApi);
 
 router.use("/artiste", artisteApi);
 
-// router.use("/category", categoryApi);
-
-// router.use('/artiste/create', );
+router.use("/category", categoryApi);
 
 module.exports = router;
