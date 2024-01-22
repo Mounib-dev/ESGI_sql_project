@@ -72,12 +72,8 @@ router.post('/update/:id', async(req, res) => {
 
 router.delete('/delete/:id', async(req, res) => {
     try {
-        console.log('delete');
         const id = req.params.id;
-
-        const query = `DELETE FROM morceau WHERE id = ${id}`;
-
-        const result = await executeQuery(query);
+        const result = await executeQuery(`DELETE FROM morceau WHERE id = ${id}`);
 
         res.send(result);
     } catch(e) {
