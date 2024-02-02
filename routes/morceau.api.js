@@ -12,12 +12,12 @@ router.get('', async(req, res) => {
 
 router.get('/:id', async(req, res) => {
     try {
-
         const result = await executeQuery(`SELECT * FROM morceau WHERE id = ${req.params.id}`);
-        if(result.length === 0) res.status(404).send({ error: 'Not found' });
+        if(result.length === 0) return res.status(404).send({ error: 'Not found' });
 
         res.send(result);
     } catch(e) {
+        console.log('entering catch')
         res.status(500).send({ error: e })
     }
 })

@@ -13,6 +13,8 @@ router.get('', async(req, res) => {
 router.get('/:id', async(req, res) => {
     try {
         const result = await executeQuery(`SELECT * FROM album WHERE id = ${req.params.id}`)
+        if(result.length === 0) return res.status(404).send({ error: 'Not found' });
+
         res.send(result);
     } catch(e) {
         res.status(500).send({ error: e });
