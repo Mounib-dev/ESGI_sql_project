@@ -8,6 +8,7 @@ BEGIN
     -- insert albums
     INSERT INTO album (nom, id_artiste) VALUES ('Symphonie n°40', 1);
 
+    -- insert categories
     INSERT INTO categorie (nom) VALUES ('Classique');
     INSERT INTO categorie (nom) VALUES ('Jazz');
     INSERT INTO categorie (nom) VALUES ('Rock');
