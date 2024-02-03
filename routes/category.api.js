@@ -9,10 +9,12 @@ router.post("/create", (req, res) => {
   const name = req.body.name;
 
   executeQuery(`INSERT INTO categorie (nom) VALUES ('${name}')`)
-    .then(() => {
-      return res
-        .status(200)
-        .send("<h2>Nouvelle catégorie correctement ajoutée</h2>");
+    .then((response) => {
+      return res.status(200).send(
+        `<h2>Nouvelle catégorie correctement ajoutée:
+        ${JSON.stringify(response)}
+        </h2>`
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -24,8 +26,14 @@ router.post("/create", (req, res) => {
 
 router.get("/read", (req, res) => {
   executeQuery(`SELECT * FROM categorie`)
-    .then(() => {
-      return res.status(200).send("<h2>Lecture réussie</h2>");
+    .then((response) => {
+      const jsonReponse = JSON.stringify(response);
+      return res.status(200).send(
+        `<h2>
+        Lecture réussie:
+        ${jsonReponse}
+        </h2>`
+      );
     })
     .catch((err) => {
       return res
@@ -34,9 +42,10 @@ router.get("/read", (req, res) => {
     });
 });
 
-router.post("/update", (req, res) => {
+router.post("/update/:id", (req, res) => {
   const name = req.body.name;
-  executeQuery(`UPDATE categorie SET nom = '${name}'WHERE id = 4`)
+  const id = req.params.id;
+  executeQuery(`UPDATE categorie SET nom = '${name}'WHERE id = ${id}`)
     .then(() => {
       return res.status(200).send("<h2>La catégorie a bien été modifiée</h2>");
     })
@@ -46,11 +55,15 @@ router.post("/update", (req, res) => {
     });
 });
 
-router.post("/delete", (req, res) => {
-  const id = req.body.id;
+router.post("/delete/:id", (req, res) => {
+  const id = req.params.id;
   executeQuery(`DELETE FROM categorie WHERE id = ${id}`)
     .then(() => {
-      return res.status(200).send("<h2>La catégorie a bien été supprimée</h2>");
+      return res
+        .status(200)
+        .send(
+          "<h2>La catégorie a bien été supprimée, les morceaux ayant cette catégorie ne seront plus catégorisés</h2>"
+        );
     })
     .catch((err) => {
       console.log(err.message);
