@@ -41,6 +41,7 @@ const addProcedures = async () => {
     await executeQueryFromFile("procedures/cleanDB.sql");
     await executeQueryFromFile("procedures/createDB.sql");
     await executeQueryFromFile("procedures/insertData.sql");
+    await executeQueryFromFile("procedures/addTrackToAlbum.sql");
   } catch (error) {
     console.error("Error adding procedures:", error);
     throw error;
@@ -65,6 +66,7 @@ const deleteAllProcedures = async () => {
     await executeQuery("DROP PROCEDURE IF EXISTS CleanDB;");
     await executeQuery("DROP PROCEDURE IF EXISTS CreateDB;");
     await executeQuery("DROP PROCEDURE IF EXISTS InsertData;");
+    await executeQuery("DROP PROCEDURE IF EXISTS addTrackToAlbum");
   } catch (error) {
     console.error("Error deleting procedures:", error);
     throw error;
