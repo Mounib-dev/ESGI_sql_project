@@ -6,12 +6,9 @@ const { executeQuery } = require("../utils/functions");
 const db = getConnection();
 
 router.post("/create", (req, res) => {
-  console.log(req.body);
-  console.log(req.body.name);
-  const { name, birth_date, nationality } = req.body;
-
+  const { name, date_of_birth, nationality } = req.body;
   executeQuery(
-    `INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('${name}', '${birth_date}', '${nationality}')`
+    `INSERT INTO artiste (nom, date_de_naissance, nationalite) VALUES ('${name}', '${date_of_birth}', '${nationality}')`
   )
     .then(() => {
       return res
@@ -19,7 +16,9 @@ router.post("/create", (req, res) => {
         .send("<h2>Nouveau artiste correctement ajouté</h2>");
     })
     .catch((err) => {
-      console.log(err);
+      if (err.message === "Date de naissance non valide") {
+        return res.status(422).send(`<h2>${err.message}</h2>`);
+      }
       return res
         .status(409)
         .send("<h2>Le nom que vous avez entré existe déjà</h2>");
@@ -28,42 +27,51 @@ router.post("/create", (req, res) => {
 
 router.get("/read", (req, res) => {
   executeQuery(`SELECT * FROM artiste`)
-    .then(() => {
-      return res.status(200).send("<h2>Lecture réussie</h2>");
+    .then((response) => {
+      const jsonResponse = JSON.stringify(response);
+      return res.status(200).send(
+        `<h2>
+      Lecture réussie :
+      ${jsonResponse}
+      </h2>`
+      );
     })
     .catch((err) => {
+      console.log(err.message);
       return res
         .status(500)
         .send("<h2>Un problème est survenu, veuillez réessayer.</h2>");
     });
 });
 
-router.post("/update", (req, res) => {
-  const { name, birth_date, nationality } = req.body;
+router.post("/update/:id", (req, res) => {
+  const { name, date_of_birth, nationality } = req.body;
+  const id = req.params.id;
   console.log(name);
-  console.log(birth_date);
+  console.log(date_of_birth);
   console.log(nationality);
   executeQuery(
-    `UPDATE artiste SET nom = '${name}', date_de_naissance = '${birth_date}', nationalite = '${nationality}' WHERE id = 4`
+    `UPDATE artiste SET nom = '${name}', date_de_naissance = '${date_of_birth}', nationalite = '${nationality}' WHERE id = ${id}`
   )
     .then(() => {
       return res.status(200).send("<h2>Modifications prises en compte</h2>");
     })
     .catch((err) => {
       console.log(err.message);
-      return res
-        .status(400)
-        .send(
-          "<h2>Une erreur est survenue, vous ne pouvez pas modifier la nationalité d'un artiste</h2>"
-        );
+      return res.status(400).send(`<h2>${err.message}</h2>`);
     });
 });
 
-router.post("/delete", (req, res) => {
-  const id = req.body.id;
+router.post("/delete/:id", (req, res) => {
+  const id = req.params.id;
   executeQuery(`DELETE FROM artiste WHERE id = ${id}`)
-    .then(() => {
-      return res.status(200).send("<h2>L'artiste a bien été supprimé</h2>");
+    .then((response) => {
+      return res.status(200).send(
+        `<h2>
+        L'artiste a bien été supprimé :
+        ${JSON.stringify(response)}
+        </h2>`
+      );
     })
     .catch((err) => {
       console.log(err.message);
