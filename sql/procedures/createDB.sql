@@ -22,7 +22,7 @@ BEGIN
         id_artiste INT NOT NULL,
         FOREIGN KEY (id_artiste) REFERENCES artiste(id) ON DELETE CASCADE
     );
-
+    
     -- Create the "morceau" table
     CREATE TABLE IF NOT EXISTS morceau (
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
