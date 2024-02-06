@@ -22,14 +22,13 @@ const executeQuery = (query) => {
 const executeQueryFromFile = async (filepath) => {
     try {
         const relativePath = `./sql/${filepath}`;
-        const result = fs.readFile(relativePath, 'utf-8', async (err, data) => {
+        return fs.readFile(relativePath, 'utf-8', async (err, data) => {
             if (err) {
                 console.error('Error reading file:', err);
                 throw err;
             }
             return await executeQuery(data);
         });
-        return result;
     } catch (error) {
         console.error('Error reading or executing query from file:', error);
         throw error;
